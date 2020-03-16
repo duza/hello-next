@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-unfetch';
-import Link from 'next/link';
 
 import Layout from '../comps/MyLayout';
+import PostLink from '../comps/PostLink';
 
 
 const Index = ({ shows }) => (
@@ -9,11 +9,11 @@ const Index = ({ shows }) => (
     <h1>Batman TV Shows</h1>
     <ul>
       {shows.map(({ id, name }) => (
-        <li key={id}>
-          <Link href="/p/[id]" as={`/p/${id}`}>
-            <a>{name}</a>
-          </Link>
-        </li>
+        <PostLink
+          id={id}
+          key={id}
+          name={name}
+        />
       ))}
     </ul>
     <style jsx>{`
