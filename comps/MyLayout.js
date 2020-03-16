@@ -6,10 +6,10 @@ const layoutStyle = {
   border: '1px solid #DDD',
 };
 
-const Layout = ({ content }) => (
+const Layout = ({ children }) => (
   <div style={layoutStyle}>
     <Header />
-    {content}
+    {children}
   </div>
 );
 
