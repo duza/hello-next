@@ -1,11 +1,13 @@
 import useSWR from 'swr';
+import {useRouter} from 'next/router';
 
 function fetcher(url) {
   return fetch(url).then(r => r.json());
 }
 
 const Index = () => {
-  const { data, error } = useSWR('/api/randomQuote', fetcher);
+  const { query } = useRouter();
+  const { data, error } = useSWR(`/api/randomQuote${query.author ? '?author' + query.author : ''}`, fetcher);
   // The following line has optional chaining, added in Next.js v9.1.5,
   // is the same as `data && data.author`
   const author = data?.author;
