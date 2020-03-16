@@ -1,7 +1,9 @@
 import Layout from '../comps/MyLayout';
 
-const aboutPageContent = <p>This is the about page</p>;
-
-const About = () => <Layout content={aboutPageContent} />;
+const About = () => (
+  <Layout>
+    <p>This is the about page</p>
+  </Layout>
+);
 
 export default About;

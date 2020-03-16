@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
-const PostLink = ({ title }) => (
+const PostLink = ({ id }) => (
   <li>
-    <Link href={`/post?title=${title}`}>
-      <a>{title}</a>
+    <Link href={`/p/[id]`} as={`/p/${id}`}>
+      <a>{id}</a>
     </Link>
   </li>
 );
