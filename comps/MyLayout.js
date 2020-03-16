@@ -6,11 +6,11 @@ const layoutStyle = {
   border: '1px solid #DDD',
 };
 
-const withLayout = Page => () => (
+const Layout = ({ content }) => (
   <div style={layoutStyle}>
     <Header />
-    <Page />
+    {content}
   </div>
 );
 
-export default withLayout;
+export default Layout;

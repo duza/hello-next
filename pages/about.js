@@ -1,5 +1,7 @@
-import withLayout from '../comps/MyLayout';
+import Layout from '../comps/MyLayout';
 
-const Page = () => <p>This is the about page</p>;
+const aboutPageContent = <p>This is the about page</p>;
 
-export default withLayout(Page);
+const About = () => <Layout content={aboutPageContent} />;
+
+export default About;
