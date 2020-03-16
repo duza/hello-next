@@ -1,57 +1,49 @@
-import fetch from 'isomorphic-unfetch';
+import useSWR from 'swr';
 
-import Layout from '../comps/MyLayout';
-import PostLink from '../comps/PostLink';
+function fetcher(url) {
+  return fetch(url).then(r => r.json());
+}
+
+const Index = () => {
+  const { data, error } = useSWR('/api/randomQuote', fetcher);
+  // The following line has optional chaining, added in Next.js v9.1.5,
+  // is the same as `data && data.author`
+  const author = data?.author;
+  let quote = data?.quote;
+
+  if (!data) quote = 'Loading...';
+  if (error) quote = 'Failed to fetch the quote.';
 
 
-const Index = ({ shows }) => (
-  <Layout>
-    <h1>Batman TV Shows</h1>
-    <ul>
-      {shows.map(({ id, name }) => (
-        <PostLink
-          id={id}
-          key={id}
-          name={name}
-        />
-      ))}
-    </ul>
-    <style jsx>{`
-        h1,
-        a {
-          font-family: 'Arial';
+  return (
+    <main className="center">
+      <div className="quote">{quote}</div>
+      {author && <span className="author">- {author}</span>}
+
+      <style jsx>{`
+        main {
+          width: 90%;
+          max-width: 900px;
+          margin: 300px auto;
+          text-align: center;
+        }
+        
+        .quote {
+          font-family: cursive;
+          color: #e243de;
+          font-size: 24px;
+          padding-bottom: 10px;
         }
 
-        ul {
-          padding: 0;
+        .author {
+          font-family: sans-serif;
+          color: #559834;
+          font-size: 20px;
         }
 
-        li {
-          list-style: none;
-          margin: 5px 0;
-        }
-
-        a {
-          text-decoration: none;
-          color: blue;
-        }
-
-        a:hover {
-          opacity: 0.6;
-        }
       `}</style>
-  </Layout>
-);
-
-Index.getInitialProps = async function() {
-  const res = await fetch('https://api.tvmaze.com/search/shows?q=batman');
-  const data = await res.json();
-
-  console.log(`Show data fetched. Count: ${data.length}`);
-
-  return {
-    shows: data.map(entry => entry.show),
-  };
+    </main>
+  );
 };
 
 export default Index;
